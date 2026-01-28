@@ -1,0 +1,107 @@
+
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+               <app-search [query]="query" [modelo]="trasnferencia" [colleccionName]="trasnferencias"
+        [colleccion]="'trasnferencias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <div class="alert-heading">Cargando</div>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <h4 class="card-title">Transferencias: ({{ trasnferencias.length}})</h4>
+                        <h6 class="card-subtitle">Transferencias registrados en la app</h6>
+                    </div>
+                    <div class="col-2 d-flex justify-content-end">
+                        <app-backbutton></app-backbutton>
+                    </div>
+                </div>
+                <br>
+                <hr>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Metodo</th>
+                                <th>Referencia</th>
+                                <th>Banco</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Status</th>
+                                <th>Creada</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let transf of trasnferencias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                
+                                <td>
+                                    {{transf.metodo_pago.tipo}}
+                                    
+                                </td>
+                                <td>
+                                    {{transf.referencia}}
+                                </td>
+                                <td>
+                                    {{transf.bankName}}
+                                </td>
+                                <td>
+                                    {{transf.amount|currency}}
+                                </td>
+                                <td>
+                                    {{transf.paymentday | date}}
+                                </td>
+                                <td>
+                                    <div class="font-size-sm mb-4">
+                                        <span class="badge badge-primary badge-shadow" *ngIf="transf.status == 'pending'">{{transf.status}}</span>
+                                        <span class="badge badge-success badge-shadow" *ngIf="transf.status == 'ok'">{{transf.status}}</span>
+                                        <span class="badge badge-danger badge-shadow" *ngIf="transf.status == 'no'">{{transf.status}}</span>
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    {{transf.createdAt | date:'mediumDate'}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <select
+                                    class="form-control form-select-solid fw-bolder"
+
+                                    name="state" [(ngModel)]="transf.status" (change)="cambiarStatus(transf)"
+                                    placeholder="state">
+                                    <option>-- Select --</option>
+                                    <option value="pending">Pendiente</option>
+                                      <option value="ok">Aprobado</option>
+                                      <option value="no">Rechazado</option>
+                                      </select>
+
+                                      <a (click)="eliminarSlider(transf)" class="btn btn-outline-danger " data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-trash text-danger"></i> </a>
+                                   
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
