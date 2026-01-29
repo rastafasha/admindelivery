@@ -20,7 +20,7 @@ export class PostalComponent implements OnInit {
   public msm_error = '';
   public postales;
   public identity;
-   option_selectedd: number = 1;
+   option_selectedd: number = 3;
   solicitud_selectedd: any = null;
   cargando = false;
   crearNuevo = false;

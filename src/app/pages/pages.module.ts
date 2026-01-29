@@ -24,9 +24,9 @@ import { ComponentsModule } from '../components/components.module';
 //pluggins
 import { NgChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { AdminModule } from "../admin/admin.module";
 import { TranslateModule } from '@ngx-translate/core';
+import { MantenimientosModule } from './mantenimientos/mantenimientos.module';
 
 @NgModule({
   declarations: [
@@ -36,13 +36,11 @@ import { TranslateModule } from '@ngx-translate/core';
     PerfilComponent,
     UsuariosComponent,
     BusquedaComponent,
-    UsuarioComponent,
   ],
   exports: [
     DashboardComponent,
     PagesComponent,
     AccountSettingComponent,
-    UsuarioComponent
   ],
   imports: [
     FormsModule,
@@ -56,6 +54,7 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxPaginationModule,
     AdminModule,
     TranslateModule,
+    MantenimientosModule
 ],
   providers:[IconosService]
 })

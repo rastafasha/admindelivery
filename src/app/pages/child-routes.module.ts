@@ -34,6 +34,7 @@ import { ContactodetailsComponent } from '../admin/contacto/contactodetails/cont
 import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-trasnferencias/lista-trasnferencias.component';
 import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component';
 import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
+import { UsertiendaaddComponent } from './mantenimientos/usertiendaadd/usertiendaadd.component';
 
 
 const childRoutes: Routes = [
@@ -42,6 +43,7 @@ const childRoutes: Routes = [
             { path: 'buscar/:termino', component: BusquedaComponent, data:{tituloPage:'Busquedas'} },
             { path: 'perfil', component: PerfilComponent, data:{tituloPage:'Perfil'} },
             { path: 'usuario/:id', component: UsuarioComponent, data:{tituloPage:'Perfil Usuario'} },
+            { path: 'usuario/edit/:id', component: UsertiendaaddComponent, data:{tituloPage:'Perfil Usuario'} },
 
             //tienda
 
