@@ -18,6 +18,20 @@
                     </ul>
                 </li>
                 <li class="nav-devider"></li>
+                <li class="nav-small-cap">{{'Delivery'| translate}}</li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-store"></i>
+                        <span class="hide-menu">{{'Delivery'| translate}}<span class="label label-rouded label-themecolor pull-right">8</span>
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                         <li><a routerLink="categoria" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Categorías'| translate}} </a></li>
+                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="nav-devider"></li>
                 <li class="nav-small-cap">{{'Adminstración'| translate}}</li>
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
@@ -39,7 +53,7 @@
                         </li>
 
                         <li><a routerLink="cupon" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cupón'|translate}} </a></li>
-                        <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li>
+                        <!-- <li><a routerLink="postal" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Delivery '|translate}}</a></li> -->
                         <li><a routerLink="contacto" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Contacto'|translate}} </a></li>
                         <li><a routerLink="cancelacion/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Cancelación'|translate}} </a></li>
                         <li><a routerLink="tikets/modulo" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Ticket'|translate}} </a></li>

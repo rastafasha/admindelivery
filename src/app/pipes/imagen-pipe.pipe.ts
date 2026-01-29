@@ -11,7 +11,7 @@ export class ImagenPipePipe implements PipeTransform {
   transform(img: string, tipo: 'usuarios'|'tiendas'|'marcas'|'productos'|'congenerals'
   |'promocions'|'galerias'|'ingresos'|
   'facturas'|'blogs' |'pages' |'cursos'
-  |'sliders'|'drivers'
+  |'sliders'|'drivers'|'tipos'
 ): string {
 
     if(!img){

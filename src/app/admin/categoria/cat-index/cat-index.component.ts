@@ -8,6 +8,8 @@ import { CategoriaService } from '../../../services/categoria.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import { FormGroup } from '@angular/forms';
+import { TipovehiculoService } from 'src/app/services/tipovehiculo.service';
+import { TipoVehiculo } from 'src/app/models/tipovehiculo.model';
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,8 +20,8 @@ declare var $:any;
 })
 export class CatIndexComponent implements OnInit {
 
-  public categorias: Categoria[] =[];
-  public categoria: Categoria;
+  public tipos: TipoVehiculo[] =[];
+  public tipo: TipoVehiculo;
   public cargando: boolean = true;
 
   public totalCategorias: number = 0;
@@ -34,12 +36,13 @@ export class CatIndexComponent implements OnInit {
   query:string ='';
         searchForm!:FormGroup;
         currentPage = 1;
-        collecion='categorias';
+        collecion='tipos';
 
   public msm_error;
 
   constructor(
     private categoriaService: CategoriaService,
+    private tipoVService: TipovehiculoService,
     private modalImagenService: ModalImagenService,
     private busquedaService: BusquedasService,
     private _iconoService: IconosService,
@@ -48,24 +51,25 @@ export class CatIndexComponent implements OnInit {
   ngOnInit(): void {
     this.cargar_iconos();
 
-    this.loadCategorias();
+    this.loadTipos();
     this.imgSubs = this.modalImagenService.nuevaImagen
     .pipe(
       delay(100)
     )
-    .subscribe(banner => { this.loadCategorias();});
+    .subscribe(banner => { this.loadTipos();});
   }
 
   ngOnDestroy(){
     this.imgSubs.unsubscribe();
   }
 
-  loadCategorias(){
+  loadTipos(){
     this.cargando = true;
-    this.categoriaService.cargarCategorias().subscribe(
-      categorias => {
+    this.tipoVService.getTiposVehics().subscribe(
+      (resp:any) => {
         this.cargando = false;
-        this.categorias = categorias;
+        this.tipos = resp;
+        
       }
     )
 
@@ -93,7 +97,7 @@ export class CatIndexComponent implements OnInit {
   eliminarCategoria(categoria: Categoria){
     this.categoriaService.borrarCategoria(categoria._id)
     .subscribe( resp => {
-      this.loadCategorias();
+      this.loadTipos();
       Swal.fire('Borrado', categoria.nombre, 'success')
     })
 
@@ -101,13 +105,13 @@ export class CatIndexComponent implements OnInit {
 
 public PageSize(): void {
     this.query = '';
-    this.loadCategorias();
+    this.loadTipos();
     // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
-    if (event.categorias) {
-      this.categorias = event.categorias;
+    if (event.tipos) {
+      this.tipos = event.tipos;
     }
   }
 
@@ -116,7 +120,7 @@ public PageSize(): void {
       response=>{
         $('#desactivar-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadCategorias();
+        this.loadTipos();
       },
       error=>{
         this.msm_error = 'No se pudo desactivar el producto, vuelva a intenter.'
@@ -130,7 +134,7 @@ public PageSize(): void {
 
         $('#activar-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.loadCategorias();
+        this.loadTipos();
       },
       error=>{
 

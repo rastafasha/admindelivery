@@ -16,7 +16,7 @@ export class FileUploadService {
     archivo: File,
     tipo: 'usuarios'|'marcas' |'productos' | 'congenerals'|'promocions' |'galerias'|'ingresos'
     |'blogs' |'pages' |'cursos' |'sliders' | 'locaciones' 
-    |'facturas' | 'categorias' | 'drivers'
+    |'facturas' | 'categorias' | 'drivers'|'tipos'
     ,id: string
   ){
 

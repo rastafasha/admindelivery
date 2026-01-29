@@ -2,8 +2,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <app-search [query]="query" [modelo]="categoria" [colleccionName]="categorias"
-        [colleccion]="'categorias'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
+                <app-search [query]="query" [modelo]="tipo" [colleccionName]="tipos"
+        [colleccion]="'tipos'" (searchEvent)="handleSearchEvent($event)" (resetEvent)="PageSize()"></app-search>
             </div>
         </div>
     </div>
@@ -25,14 +25,14 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-9">
-                        <h4 class="card-title">Categoría: ({{ categorias.length}})</h4>
+                        <h4 class="card-title">Tipos: ({{ tipos.length}})</h4>
                         <h6 class="card-subtitle">Categoría registrados en la app</h6>
                     </div>
                     <div class="col-3">
                         <div class="text-right">
                             <button class="btn btn-primary" [routerLink]="['/dashboard/categoria/create/']">
                             <i class="fa fa-pencil"></i>
-                            Crear Categoría
+                            Crear Categoría Vehiculos
                           </button>
                         </div>
                     </div>
@@ -47,24 +47,22 @@
                                 <th>#</th>
                                 <th>img</th>
                                 <th>Categoria</th>
-                                <th>Subcategorias</th>
                                 <th>Status</th>
                                 <th>Creación</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let categoria of categorias |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <th scope="row"><span class="{{categoria.icono}}"></span></th>
+                            <tr *ngFor="let tipo of tipos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
+                                <th scope="row"><span class="{{tipo.icono}}"></span></th>
                                 <td class="text-center">
-                                    <img [routerLink]="['/dashboard/categoria/edit',categoria._id]" [src]="categoria.img | imagenPipe: 'categorias'" class="avatar cursor" alt="{{categoria.titulo}}">
+                                    <img [routerLink]="['/dashboard/categoria/edit',tipo._id]" [src]="tipo.img | imagenPipe: 'tipos'" class="avatar cursor" alt="{{tipo.nombre}}">
                                 </td>
-                                <td>{{categoria.nombre}}</td>
-                                <td>{{categoria.subcategorias}}...</td>
+                                <td>{{tipo.nombre}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-accent" *ngIf="categoria.status == 'Edición' || categoria.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+categoria._id"><span class="czi-check"></span> Activar</button>
+                                    <button type="button" class="btn btn-accent" *ngIf="tipo.status == 'Edición' || tipo.status == 'Desactivado'" data-toggle="modal" [attr.data-target]="'#activar-'+tipo._id"><span class="czi-check"></span> Activar</button>
 
-                                    <div class="modal fade" [attr.id]="'activar-'+categoria._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" [attr.id]="'activar-'+tipo._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -72,18 +70,18 @@
                                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el categoria fué editado correctamente.</p>
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el tipo fué editado correctamente.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(categoria._id)">Aceptar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="activar(tipo._id)">Aceptar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-primary" *ngIf="categoria.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+categoria._id"><span class="czi-close"></span> Desactivar</button>
-                                    <div class="modal fade" [attr.id]="'desactivar-'+categoria._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <button type="button" class="btn btn-primary" *ngIf="tipo.status == 'Activo'" data-toggle="modal" [attr.data-target]="'#desactivar-'+tipo._id"><span class="czi-close"></span> Desactivar</button>
+                                    <div class="modal fade" [attr.id]="'desactivar-'+tipo._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -91,20 +89,20 @@
                                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">Al aceptar el categoria, no será visible en la tienda.</p>
+                                                    <p class="font-size-sm">Al aceptar el tipo, no será visible en la tienda.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(categoria._id)">Aceptar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(tipo._id)">Aceptar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal" [attr.data-target]="'#papelera-'+categoria._id"><span class="czi-remove-folder
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" [attr.data-target]="'#papelera-'+tipo._id"><span class="czi-remove-folder
                                     "></span> Papelera</button>
 
-                                    <div class="modal fade" [attr.id]="'papelera-'+categoria._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal fade" [attr.id]="'papelera-'+tipo._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -112,24 +110,24 @@
                                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="font-size-sm">El categoria se moverá a la papelera de reciclaje.</p>
+                                                    <p class="font-size-sm">El tipo se moverá a la papelera de reciclaje.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
-                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="papelera(categoria._id)">Aceptar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="papelera(tipo._id)">Aceptar</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <span class="text-muted" *ngIf="categoria.status == 'Edición'" style="font-size: 13px;">Este categoria aún se encuentra en edición.</span>
-                                    <span class="text-muted" *ngIf="categoria.status == 'Desactivado'" style="font-size: 13px;">Este categoria aún no está disponible en la tienda.</span>
+                                    <span class="text-muted" *ngIf="tipo.status == 'Edición'" style="font-size: 13px;">Este tipo aún se encuentra en edición.</span>
+                                    <span class="text-muted" *ngIf="tipo.status == 'Desactivado'" style="font-size: 13px;">Este tipo aún no está disponible en la tienda.</span>
 
                                 </td>
-                                <td>{{ categoria.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                                <td>{{ tipo.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/categoria/edit', categoria._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a (click)="eliminarCategoria(categoria)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a [routerLink]="['/dashboard/categoria/edit', tipo._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a (click)="eliminartipo(tipo)" class="cursor" data-toggle="tooltip" data-original-title="Borrar"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
                             </tr>
 

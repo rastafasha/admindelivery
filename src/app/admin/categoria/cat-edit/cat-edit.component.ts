@@ -12,6 +12,8 @@ import { CategoriaService } from 'src/app/services/categoria.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { IconosService } from 'src/app/services/iconos.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { TipovehiculoService } from 'src/app/services/tipovehiculo.service';
+import { TipoVehiculo } from 'src/app/models/tipovehiculo.model';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -29,8 +31,8 @@ declare var $:any;
 export class CatEditComponent implements OnInit {
 
 
-  public categoriaForm: FormGroup;
-  public categoria: Categoria;
+  public tipoForm: FormGroup;
+  public tipo: TipoVehiculo;
   public usuario: Usuario;
   public imagenSubir: File;
   public imgTemp: any = null;
@@ -41,11 +43,11 @@ export class CatEditComponent implements OnInit {
   state_banner:boolean;
 
   public Editor = ClassicEditor;
-  public categoriaSeleccionado: Categoria;
+  public tipoSeleccionado: TipoVehiculo;
 
   constructor(
     private fb: FormBuilder,
-    private categoriaService: CategoriaService,
+    private tipoService: TipovehiculoService,
     private usuarioService: UsuarioService,
     private fileUploadService: FileUploadService,
     private router: Router,
@@ -64,24 +66,22 @@ export class CatEditComponent implements OnInit {
     
     this.validarFormulario();
     this.activatedRoute.params.subscribe( ({id}) => this.cargarCategoria(id));
-    if(this.categoriaSeleccionado){
+    if(this.tipoSeleccionado){
       //actualizar
-    this.pageTitle = 'Edit Categoría';
+    this.pageTitle = 'Edit Tipo Vehiculo';
     
     }else{
       //crear
-      this.pageTitle = 'Create Categoría';
+      this.pageTitle = 'Create Tipo Vehiculo';
       }
 
 
   }
 
   validarFormulario(){
-    this.categoriaForm = this.fb.group({
+    this.tipoForm = this.fb.group({
       nombre: ['', Validators.required],
-      subcategorias: ['', Validators.required],
       icono: ['', Validators.required],
-      state_banner: ['false', Validators.required]
     })
   }
 
@@ -101,20 +101,20 @@ export class CatEditComponent implements OnInit {
       return;
     }
 
-    this.categoriaService.getCategoriaById(_id)
+    this.tipoService.getTiposVehicById(_id)
     .pipe(
       // delay(100)
       )
-      .subscribe( categoria =>{
+      .subscribe( tipo =>{
 
 
-      if(!categoria){
+      if(!tipo){
         return this.router.navigateByUrl(`/dasboard/categoria`);
       }
 
-        const { nombre, subcategorias, icono, state_banner } = categoria;
-        this.categoriaSeleccionado = categoria;
-        this.categoriaForm.setValue({nombre, subcategorias, icono, state_banner});
+        const { nombre,  icono,  } = tipo;
+        this.tipoSeleccionado = tipo;
+        this.tipoForm.setValue({nombre,  icono, });
 
       });
 
@@ -125,22 +125,22 @@ export class CatEditComponent implements OnInit {
 
   updateCategoria(){
 
-    const {nombre, subcategorias } = this.categoriaForm.value;
+    const {nombre } = this.tipoForm.value;
 
-    if(this.categoriaSeleccionado){
+    if(this.tipoSeleccionado){
       //actualizar
       const data = {
-        ...this.categoriaForm.value,
-        _id: this.categoriaSeleccionado._id
+        ...this.tipoForm.value,
+        _id: this.tipoSeleccionado._id
       }
-      this.categoriaService.actualizarCategoria(data).subscribe(
+      this.tipoService.update(data).subscribe(
         resp =>{
           Swal.fire('Actualizado', `${nombre} actualizado correctamente`, 'success');
         });
 
     }else{
       //crear
-      this.categoriaService.crearCategoria(this.categoriaForm.value)
+      this.tipoService.registro(this.tipoForm.value)
       .subscribe( (resp: any) =>{
         Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
         this.router.navigateByUrl(`/dashboard/categoria`);
@@ -167,8 +167,8 @@ export class CatEditComponent implements OnInit {
 
   subirImagen(){
       this.fileUploadService
-      .actualizarFoto(this.imagenSubir, 'categorias', this.categoriaSeleccionado._id)
-      .then(img => { this.categoriaSeleccionado.img = img;
+      .actualizarFoto(this.imagenSubir, 'tipos', this.tipoSeleccionado._id)
+      .then(img => { this.tipoSeleccionado.img = img;
         Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
   
       }).catch(err =>{
