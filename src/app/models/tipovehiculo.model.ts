@@ -6,6 +6,7 @@ export class TipoVehiculo{
   constructor(
     public nombre : string,
     public icono: string,
+    public precio: number,
     public img: string,
     public status: string,
     public _id?: string

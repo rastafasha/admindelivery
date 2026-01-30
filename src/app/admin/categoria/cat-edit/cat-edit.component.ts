@@ -82,6 +82,7 @@ export class CatEditComponent implements OnInit {
     this.tipoForm = this.fb.group({
       nombre: ['', Validators.required],
       icono: ['', Validators.required],
+      precio: [''],
     })
   }
 
@@ -112,9 +113,9 @@ export class CatEditComponent implements OnInit {
         return this.router.navigateByUrl(`/dasboard/categoria`);
       }
 
-        const { nombre,  icono,  } = tipo;
+        const { nombre,  icono, precio } = tipo;
         this.tipoSeleccionado = tipo;
-        this.tipoForm.setValue({nombre,  icono, });
+        this.tipoForm.setValue({nombre,  icono, precio });
 
       });
 

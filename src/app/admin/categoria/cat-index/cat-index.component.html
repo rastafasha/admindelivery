@@ -32,7 +32,7 @@
                         <div class="text-right">
                             <button class="btn btn-primary" [routerLink]="['/dashboard/categoria/create/']">
                             <i class="fa fa-pencil"></i>
-                            Crear Categoría Vehiculos
+                            Crear Categoría 
                           </button>
                         </div>
                     </div>
@@ -48,13 +48,14 @@
                                 <th>img</th>
                                 <th>Categoria</th>
                                 <th>Status</th>
+                                <th>Precio</th>
                                 <th>Creación</th>
                                 <th class="text-nowrap">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let tipo of tipos |  paginate: { itemsPerPage: count, currentPage: p } | orderBy:'createdAt, desc'">
-                                <th scope="row"><span class="{{tipo.icono}}"></span></th>
+                                <th scope="row"><i class=" fa {{tipo.icono}}"></i></th>
                                 <td class="text-center">
                                     <img [routerLink]="['/dashboard/categoria/edit',tipo._id]" [src]="tipo.img | imagenPipe: 'tipos'" class="avatar cursor" alt="{{tipo.nombre}}">
                                 </td>
@@ -124,6 +125,7 @@
                                     <span class="text-muted" *ngIf="tipo.status == 'Desactivado'" style="font-size: 13px;">Este tipo aún no está disponible en la tienda.</span>
 
                                 </td>
+                                <td>{{ tipo.precio | currency }}</td>
                                 <td>{{ tipo.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
                                 <td class="text-nowrap text-center">
                                     <a [routerLink]="['/dashboard/categoria/edit', tipo._id]" class="cursor" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>

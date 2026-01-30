@@ -49,7 +49,7 @@ export class CatIndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cargar_iconos();
+    // this.cargar_iconos();
 
     this.loadTipos();
     this.imgSubs = this.modalImagenService.nuevaImagen
@@ -79,7 +79,7 @@ export class CatIndexComponent implements OnInit {
     this._iconoService.getIcons().subscribe(
       resp =>{
         this.listIcons = resp;
-        console.log(this.listIcons.iconos)
+        // console.log(this.listIcons.iconos)
 
       }
     )
