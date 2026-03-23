@@ -260,23 +260,7 @@ drivers: Driver[] = [];
     }
   }
 
-  /**
-   * Helper method to parse position strings from "lat,lng" format
-   */
-  // private parsePosition(positionStr: string | null | undefined): { lat: number; lng: number } | null {
-  //   if (!positionStr) return null;
-    
-  //   const parts = positionStr.split(',');
-  //   if (parts.length === 2) {
-  //     const lat = parseFloat(parts[0].trim());
-  //     const lng = parseFloat(parts[1].trim());
-  //     if (!isNaN(lat) && !isNaN(lng)) {
-  //       return { lat, lng };
-  //     }
-  //   }
-  //   return null;
-  // }
-
+ 
   /**
    * Load asignacion data and set positions based on user role
    */
@@ -294,8 +278,8 @@ drivers: Driver[] = [];
             const parsedDriverPos = this.parsePosition(this.asignacion.driverPosition);
             const parsedDeliveryPos = this.parsePosition(this.asignacion.deliveryPosition);
 
-            if (this.user.role == 'CHOFER') {
-              // CHOFER: deliveryPosition from asignacion, driverPosition from GPS
+            if (this.user.role == 'SUPERADMIN') {
+              // SUPERADMIN: deliveryPosition from asignacion, driverPosition from GPS
               if (parsedDriverPos) {
                 this.driverPosition = parsedDriverPos;
                 console.log('Posición repartidor (from asignacion):', this.driverPosition);
@@ -307,8 +291,8 @@ drivers: Driver[] = [];
               // driverPosition will be set by geolocation subscription
             }
             
-            if (this.user.role == 'USER') {
-              // USER: Both positions from asignacion
+            if (this.user.role == 'ADMIN') {
+              // ADMIN: Both positions from asignacion
               if (parsedDriverPos) {
                 this.driverPosition = parsedDriverPos;
                 console.log('Posición repartidor (from asignacion):', this.driverPosition);
@@ -648,7 +632,7 @@ drivers: Driver[] = [];
   onMapReady(map: L.Map) {
     setTimeout(() => {
       map.invalidateSize();
-    }, 0);
+    }, 200);
   }
 
 }

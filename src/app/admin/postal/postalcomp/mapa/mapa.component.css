@@ -1,22 +1,28 @@
 .mostrarmapa {
-    position: fixed;
-    width: 100%;
-    height: calc(96vh - 30px);
-    top: 0;
-    left: 0;
+    position: fixed; /* O absolute, dependiendo de tu scroll */
+    /* Ajusta estos valores según el ancho de tu sidebar y alto de tu header */
+    top: 60px;      /* Altura aproximada de tu Header */
+    left: 240px;    /* Ancho aproximado de tu Sidebar */
+    width: calc(100% - 240px); /* Resta el ancho del menú */
+    height: calc(100vh - 60px); /* Resta el alto del header */
     background-color: #f0f0f0;
-    z-index: 1;
+    z-index: 1; /* Asegúrate de que el sidebar tenga un z-index mayor (ej. 10) */
 }
 
 .map-container {
-    height: 500px;
-    /* O 100vh, pero nunca 100% si el padre no tiene altura */
+    height: 100%; /* Ahora sí ocupará el área restante correctamente */
     width: 100%;
     display: block;
-    z-index: 1;
 }
 
-.coords-info {
+@media (max-width: 768px) {
+    .mostrarmapa {
+        left: 0;
+        width: 100%;
+        top: 60px; /* Mantén solo el espacio del header si este sigue visible */
+    }
+}
+/* .coords-info {
     position: relative;
     bottom: 80px;
     left: 10px;
@@ -35,6 +41,16 @@
     align-items: center;
     padding: 6px 0;
     border-bottom: 1px solid #eee;
+} */
+
+.coords-info, .error-message {
+    position: absolute; /* Cambiado de relative a absolute */
+    bottom: 20px; /* Ajustado para que no quede tan arriba */
+    left: 50%;
+    transform: translateX(-50%); /* Centrado horizontal */
+    width: auto;
+    min-width: 250px;
+    z-index: 1100;
 }
 
 .coord-item:last-child {
@@ -120,6 +136,7 @@
     z-index: 5;
     top: 70px;
     padding: 20px;
+    left: 50px;
 }
 
 .saludo h2 {
@@ -248,7 +265,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     font-size: 13px;
-    z-index: 99;
+    z-index: 999;
 }
 
 .legend div {
