@@ -10,6 +10,7 @@ declare const gapi: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  standalone:false,
   styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent implements OnInit {
@@ -83,16 +84,16 @@ ngOnInit(){
 
 
 
-  renderButton() {
-    gapi.signin2.render('my-signin2', {
-      'scope': 'profile email',
-      'width': 240,
-      'height': 50,
-      'longtitle': true,
-      'theme': 'dark',
-    });
-    this.startApp();
-  }
+  // renderButton() {
+  //   gapi.signin2.render('my-signin2', {
+  //     'scope': 'profile email',
+  //     'width': 240,
+  //     'height': 50,
+  //     'longtitle': true,
+  //     'theme': 'dark',
+  //   });
+  //   this.startApp();
+  // }
 
   async startApp(){
     this.usuarioService.googleInit();

@@ -63,5 +63,33 @@
             </div>
         </div>
     </div>
-    
+    <!---hospitales-->
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Productos</h4>
+                <div class="alert alert-info" *ngIf="productos.length === 0">
+                    <p class="mb-0"> No hay productos con ese termino</p>
+                </div>
+                <div class="table-responsive" *ngIf="productos.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of productos" class="animated fadeIn fast">
+                                <td>
+                                    <img [src]="p.img | imagenPipe: 'productos' " class="avatar">
+                                </td>
+                                <td>{{p.titulo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -7,10 +7,13 @@ import { Usuario } from '../../../models/usuario.model';
 import { BusquedasService } from '../../../services/busquedas.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { UsuarioService } from '../../../services/usuario.service';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { Tienda } from 'src/app/models/tienda.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
+  standalone:false,
   templateUrl: './usuarios.component.html',
   styles: [
   ]

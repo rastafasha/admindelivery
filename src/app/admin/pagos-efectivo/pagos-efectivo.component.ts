@@ -5,6 +5,7 @@ import { PagoEfectivoService } from 'src/app/services/pago-efectivo.service';
 
 @Component({
   selector: 'app-pagos-efectivo',
+  standalone:false,
   templateUrl: './pagos-efectivo.component.html',
   styleUrls: ['./pagos-efectivo.component.css']
 })
@@ -12,6 +13,7 @@ export class PagosEfectivoComponent implements OnInit {
 
   pagoefectivos:PagoEfectivo[] = [];
   pagoefectivo:PagoEfectivo;
+  user:any;
 
    query:string ='';
           searchForm!:FormGroup;
@@ -23,7 +25,16 @@ export class PagosEfectivoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.obtenerPagosEfectivo();
+     window.scrollTo(0, 0);
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
+    
+    if (this.user.role === 'SUPERADMIN') {
+      this.obtenerPagosEfectivo();
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.getTiposdePagoByLocal()
+    }
   }
 
   private obtenerPagosEfectivo(){
@@ -35,10 +46,23 @@ export class PagosEfectivoComponent implements OnInit {
     );
   }
 
+  getTiposdePagoByLocal() {
+    this._pagosEfectivo.getPaymentMethodByTiendaId(this.user.local).subscribe(
+      (resp:any) => {
+        this.pagoefectivos = resp;
+        
+      }
+    );
+  }
+
   public PageSize(): void {
     this.query = '';
-    this.obtenerPagosEfectivo();
-    // this.router.navigateByUrl('/productos')
+    if (this.user.role === 'SUPERADMIN') {
+      this.obtenerPagosEfectivo();
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.getTiposdePagoByLocal()
+    }
   }
 
   handleSearchEvent(event: any) {

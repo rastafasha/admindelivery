@@ -4,9 +4,13 @@ import {environment} from '../../environments/environment';
 
 import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario.model';
+import { Marca } from '../models/marca.model';
+import { Producto } from '../models/producto.model';
 import { Blog } from '../models/blog.model';
 import { Page } from '../models/page.model';
+import { Curso } from '../models/curso.model';
 import { Slider } from '../models/slider.model';
+import { Tienda } from '../models/tienda.model';
 import { Transferencia } from '../models/transferencia';
 import { PagoCheque } from '../models/pagoCheque.model';
 import { PagoEfectivo } from '../models/pagoEfectivo.model';
@@ -43,13 +47,25 @@ export class BusquedasService {
     // )
   }
 
+  private trasnformarProductos(resultados: any[]): Producto[]{
+    return resultados;
+  }
+  private trasnformarMarcas(resultados: any[]): Marca[]{
+    return resultados;
+  }
   private trasnformarBlogs(resultados: any[]): Blog[]{
     return resultados;
   }
   private trasnformarPages(resultados: any[]): Page[]{
     return resultados;
   }
+  private trasnformarCursos(resultados: any[]): Curso[]{
+    return resultados;
+  }
   private trasnformarSliders(resultados: any[]): Slider[]{
+    return resultados;
+  }
+  private trasnformarTiendas(resultados: any[]): Tienda[]{
     return resultados;
   }
   private trasnformarTrasnferencias(resultados: any[]): Transferencia[]{
@@ -84,11 +100,23 @@ export class BusquedasService {
               case 'usuarios':
                 return this.trasnformarUsuarios(resp.resultados)
 
+              case 'productos':
+                return this.trasnformarProductos(resp.resultados)
+
+              case 'marcas':
+                return this.trasnformarMarcas(resp.resultados)
+
                 case 'blogs':
                 return this.trasnformarBlogs(resp.resultados)
 
                 case 'pages':
                 return this.trasnformarPages(resp.resultados)
+
+                case 'cursos':
+                return this.trasnformarCursos(resp.resultados)
+
+                case 'tiendas':
+                return this.trasnformarTiendas(resp.resultados)
 
                 case 'sliders':
                 return this.trasnformarSliders(resp.resultados)

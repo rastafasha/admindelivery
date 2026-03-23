@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContactoService } from 'src/app/services/contact.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -7,17 +7,25 @@ import { TranslateService } from '@ngx-translate/core';
 import { Congeneral } from 'src/app/models/congeneral.model';
 import { CongeneralService } from 'src/app/services/congeneral.service';
 import { CartItemModel } from 'src/app/models/cart-item-model';
+import { StorageService } from 'src/app/services/storage.service';
+import { CarritoService } from 'src/app/services/carrito.service';
 import { environment } from 'src/environments/environment';
 
-import * as io from "socket.io-client";
+import { io } from "socket.io-client";
+import { Subscription } from 'rxjs';
+import { MessageService } from 'src/app/services/message.service';
+import { TiendaService } from 'src/app/services/tienda.service';
+import { SidebarService } from 'src/app/services/sidebar.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
+  standalone:false,
   templateUrl: './header.component.html',
   styles: [
   ]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() cartItem: CartItemModel;
   cartItems: any[] = [];
@@ -25,7 +33,7 @@ export class HeaderComponent implements OnInit {
   value: string;
   id:string;
   // categorias: Categoria[];
-  public clienteSeleccionado: any ={};
+  public clienteSeleccionado: any = {};
 
   public carrito : Array<any> = [];
   public subtotal : any = 0;
@@ -41,6 +49,7 @@ export class HeaderComponent implements OnInit {
   public count_cat:number;
 
   public activeLang = 'es';
+  private cartSubscription?: Subscription;
   flag = false;
   is_visible: boolean;
    langs: string[] = [];
@@ -52,7 +61,13 @@ public tienda_moneda : any;
     private congeralService: CongeneralService,
     private router: Router,
     private _contactoService :ContactoService,
+    private _tiendaService :TiendaService,
     private translate: TranslateService,
+    private storageService: StorageService,
+    private _carritoService:CarritoService,
+    private _messageService: MessageService,
+    private cdr: ChangeDetectorRef,
+    private sidebarService: SidebarService
   ) {
     // this.usuario = usuarioService.usuario;
     
@@ -67,6 +82,8 @@ public tienda_moneda : any;
   ngOnInit(): void {
     const user = localStorage.getItem('user');
     this.usuario = JSON.parse(user);
+    this.showCliente();
+    this.getTienda();
     this.flag = true;
     this._contactoService.listar().subscribe(
       response=>{
@@ -82,16 +99,48 @@ public tienda_moneda : any;
     this.congeralService.cargarCongenerals().subscribe(
       response=>{
         this.congenerals = response;
-        console.log('header', this.congenerals);
+        // console.log('header', this.congenerals);
       },
       error=>{
 
       }
     );
 
+    if(this.storageService.existCart()){
+      this.cartItems = this.storageService.getCart();
+    }
+
+    this.socket.on('new-carrito', function (data) {
+      this.show_Carrito();
+    }.bind(this));
+
+    this.cartSubscription = this._carritoService.cart$.subscribe(cart => {
+      this.carrito = cart;
+      this.subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+      this.cdr.detectChanges();
+    });
+    
+    this.show_Carrito();
     
   }
 
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
+  }
+
+  showCliente(){
+    // obtenemos el cliente del localstorage
+    const cliente = localStorage.getItem('cliente');
+
+    // Si el cliente existe, lo parseamos de JSON a un objeto
+    if (cliente) {
+        this.clienteSeleccionado = JSON.parse(cliente);
+    } else {
+        this.clienteSeleccionado = null; // O maneja el caso en que no hay cliente
+    }
+  }
 
   public cambiarLenguaje(lang:any) {
     
@@ -115,8 +164,16 @@ public tienda_moneda : any;
     if(termino.length === 0){
       return;
     }
-
     this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
+
+  }
+
+  getTienda(){
+    this._tiendaService.getTiendaById(this.usuario.local).subscribe(
+      tienda =>{
+        this.tienda_moneda = tienda.moneda;
+      }
+    );
 
   }
 
@@ -129,6 +186,78 @@ public tienda_moneda : any;
       }
   }
 
+  /**
+   * Alterna el estado del sidebar usando el servicio
+   */
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
+    this.updateSidebarClasses();
+  }
+
+  /**
+   * Actualiza las clases CSS del sidebar según su estado
+   */
+  private updateSidebarClasses(): void {
+    const wrapper = document.getElementById('main-wrapper');
+    if (wrapper) {
+      const isOpen = this.sidebarService.isSidebarOpen();
+      
+      if (isOpen) {
+        wrapper.classList.add('show-sidebar');
+      } else {
+        wrapper.classList.remove('show-sidebar');
+      }
+    }
+  }
+
+
+  // modificado por Jose Prados
+  show_Carrito(){
+    this.subtotal = 0;
+    if(this.clienteSeleccionado){
+
+      this._carritoService.preview_carrito(this.clienteSeleccionado.uid).subscribe(
+        response =>{
+          this.carrito = response.carrito;
+          this.carrito.forEach(element => {
+            this.subtotal = this.subtotal + (element.precio*element.cantidad);
+          });
+  
+          // refrescar cambios en la vista del carrito del carrito del header
+          this.cdr.detectChanges();
+        },
+        error=>{
+          console.log(error);
+  
+        }
+      );
+    }
+  }
+
+  // modificado por José Prados
+  remove_producto(id){
+    this._carritoService.remove_carrito(id).subscribe(
+      response=>{
+        this.subtotal = this.subtotal - (response.carrito.precio*response.carrito.cantidad);
+        this._carritoService.preview_carrito(this.identity.uid).subscribe(
+          response =>{
+            this.carrito = response;
+            this.socket.emit('save-carrito', {new:true});
+
+            // refrescar cambios en la vista del carrito del header
+            this.cdr.detectChanges();
+          },
+          error=>{
+            console.log(error);
+
+          }
+        );
+      },
+      error=>{
+
+      }
+    );
+  }
 
   onDarkMode(dark:string){
     var element = document.body;

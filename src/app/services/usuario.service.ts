@@ -34,7 +34,7 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
-  get role(): 'SUPERADMIN'|'ADMIN' | 'USER' | 'CHOFER' {
+  get role(): 'SUPERADMIN'|'ADMIN' | 'USER' | 'VENTAS' | 'TIENDA' | 'ALMACEN' | 'CHOFER' {
     return this.usuario.role!;
   }
 
@@ -83,6 +83,8 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('menu');
     localStorage.removeItem('user');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('__paypal_storage__');
 
     this.auth2.signOut().then(() => {
       this.ngZone.run(() => {

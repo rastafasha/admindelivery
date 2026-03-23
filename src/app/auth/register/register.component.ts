@@ -6,14 +6,17 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
+  standalone:false,
   templateUrl: './register.component.html',
   styleUrls: [ './register.component.css' ]
 })
 export class RegisterComponent implements OnInit {
 
   public formSumitted = false;
+  currentStep = 1;
 
   registerForm:FormGroup;
+
 
 
 
@@ -23,17 +26,18 @@ export class RegisterComponent implements OnInit {
     private usuarioService: UsuarioService
   ) {
     this.registerForm = this.fb.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      email: [ '', [Validators.required, Validators.email] ],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
+      first_name: ['', [Validators.required, Validators.minLength(3)]],
+      last_name: ['', [Validators.required, Validators.minLength(3)]],
+      email: [ '', [Validators.required, Validators.email, Validators.minLength(3)] ],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+      password2: ['', [Validators.required, Validators.minLength(3)]],
       terminos: [false, Validators.required],
 
     }, {
       validators: this.passwordsIguales('password', 'password2')
 
     });
+
   }
 
 
@@ -43,8 +47,12 @@ export class RegisterComponent implements OnInit {
   }
 
   crearUsuario(){
+    if (this.currentStep !== 2) {
+      return;
+    }
+
     this.formSumitted = true;
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
 
     if(this.registerForm.invalid){
       return;
@@ -53,7 +61,7 @@ export class RegisterComponent implements OnInit {
     //realizar el posteo del usuario
     this.usuarioService.crearUsuario(this.registerForm.value).subscribe(
       resp =>{
-        console.log(resp);
+        // console.log(resp);
         this.router.navigateByUrl('/login');
       },(err) => {
         Swal.fire('Error', err.error.msg, 'error');
@@ -61,6 +69,7 @@ export class RegisterComponent implements OnInit {
     );
 
   }
+
 
   campoNoValido(campo: string): boolean {
     if(this.registerForm.get(campo).invalid && this.formSumitted){
@@ -98,6 +107,24 @@ export class RegisterComponent implements OnInit {
         pass2Control.setErrors({noEsIgual: true});
       }
     }
+  }
+
+  nextStep() {
+    if (this.isStep1Valid()) {
+      this.currentStep = 2;
+    } else {
+      this.formSumitted = true;
+    }
+  }
+
+  prevStep() {
+    this.currentStep = 1;
+  }
+
+  isStep1Valid(): boolean {
+    const firstName = this.registerForm.get('first_name');
+    const lastName = this.registerForm.get('last_name');
+    return firstName.valid && lastName.valid;
   }
 
 }

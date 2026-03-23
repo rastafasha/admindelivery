@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { VentaService } from "src/app/services/venta.service";
 import { ComentarioService } from "src/app/services/comentario.service";
+import { ProductoService } from 'src/app/services/producto.service';
 import { Location } from '@angular/common';
 
 declare const Buffer;
@@ -13,6 +14,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-detalle-cancelacion',
+  standalone:false,
   templateUrl: './detalle-cancelacion.component.html',
   styleUrls: ['./detalle-cancelacion.component.css']
 })
@@ -31,8 +33,12 @@ export class DetalleCancelacionComponent implements OnInit {
 
   constructor(
     private _userService: UsuarioService,
+    private _router : Router,
     private _route :ActivatedRoute,
+    private http: HttpClient,
     private _ventaService: VentaService,
+    private _comentarioService : ComentarioService,
+    private _productoService : ProductoService,
     private location: Location,
   ) {
     this.identity = this._userService.usuario;
@@ -75,9 +81,9 @@ export class DetalleCancelacionComponent implements OnInit {
 
   reembolsar(){
 
-    this._ventaService.get_token().subscribe(
+    this._ventaService.get_token(this.venta.local._id).subscribe(
       response =>{
-        this.access_token = response.access_token;
+        this.access_token = response;
         console.log(this.access_token);
 
         this._ventaService.set_reembolso(this.access_token,this.idventa).subscribe(
@@ -85,11 +91,11 @@ export class DetalleCancelacionComponent implements OnInit {
            this._ventaService.reembolsar(this.venta._id,this.id).subscribe(
              response =>{
               this.detalle.forEach(element => {
-                // this._productoService.reducir_stock(element.producto._id,element.cantidad).subscribe(
-                //   response =>{
+                this._productoService.reducir_stock(element.producto._id,element.cantidad).subscribe(
+                  response =>{
 
-                //   }
-                // );
+                  }
+                );
               });
               this.result_soli_error = '';
               this.init_data();

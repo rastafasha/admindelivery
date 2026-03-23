@@ -31,8 +31,10 @@ export class PagoEfectivoService {
 
 
   registro(data:any){
-    return this.http.post<any>(`${this.url}/pagoefectivo/store`,data);
+    return this.http.post<any>(`${base_url}/pagoefectivo/store`,data);
   }
+
+  
 
   listar(){
     // return this._http.get<any>(`${this.url}/pagoefectivo`);
@@ -42,4 +44,13 @@ export class PagoEfectivoService {
             map((resp:{ok: boolean, pagoefectivos: PagoEfectivo[]}) => resp.pagoefectivos)
           )
   }
+
+  getPaymentMethodByTiendaId(_id: string){
+      const url = `${base_url}/pagoefectivo/tienda/${_id}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, pagoefectivos: PagoEfectivo[]}) => resp.pagoefectivos)
+          );
+  
+    }
 }

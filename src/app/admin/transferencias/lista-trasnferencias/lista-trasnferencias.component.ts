@@ -8,12 +8,13 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-trasnferencias',
+  standalone:false,
   templateUrl: './lista-trasnferencias.component.html',
   styleUrls: ['./lista-trasnferencias.component.css']
 })
 export class ListaTrasnferenciasComponent implements OnInit {
 
-  public trasnferencias: Transferencia[] =[];
+  public transferencias: Transferencia[] = [];
   public cargando: boolean = true;
 
   public desde: number = 0;
@@ -22,11 +23,12 @@ export class ListaTrasnferenciasComponent implements OnInit {
 
   p: number = 1;
   count: number = 8;
+  user: any;
 
-  query:string ='';
-          searchForm!:FormGroup;
-          currentPage = 1;
-          collecion='categorias';
+  query: string = '';
+  searchForm!: FormGroup;
+  currentPage = 1;
+  collecion = 'categorias';
 
 
   constructor(
@@ -35,49 +37,86 @@ export class ListaTrasnferenciasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.loadTrasnferencias();
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER : '');
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadTrasnferencias();
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.transPorLocalId()
+    }
   }
 
 
-  loadTrasnferencias(){
+  loadTrasnferencias() {
     this.cargando = true;
     this.trasnferenciaService.getTransferencias().subscribe(
       transferencias => {
         this.cargando = false;
-        this.trasnferencias = transferencias;
-        console.log(this.trasnferencias);
+        this.transferencias = transferencias;
       }
     )
 
   }
 
-  cambiarStatus(trasnferencia: Transferencia){
+  transPorLocalId() {
+    this.cargando = true;
+    this.trasnferenciaService.getTransferenciaByTiendaId(this.user.local).subscribe(
+      (resp: any) => {
+        this.transferencias = resp;
+        this.cargando = false;
+      }
+    )
+  }
+
+  cambiarStatus(trasnferencia: Transferencia) {
     this.trasnferenciaService.updateStatus(trasnferencia)
-    .subscribe( resp => {
-      Swal.fire('Actualizado', trasnferencia._id,  'success')
-    })
+      .subscribe(resp => {
+        Swal.fire('Actualizado', trasnferencia._id, 'success')
+      })
 
   }
 
-  eliminarSlider(transf: Transferencia){
-    this.trasnferenciaService.borrarTransferencia(transf._id)
-    .subscribe( resp => {
-      this.loadTrasnferencias();
-      Swal.fire('Borrado', this.transf.referencia, 'success')
-    })
+  eliminarTramsf(transf: Transferencia) {
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: 'No podras recuperarlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trasnferenciaService.borrarTransferencia(transf._id)
+          .subscribe(resp => {
+            if (this.user.role === 'SUPERADMIN') {
+              this.loadTrasnferencias();
+            }
+            if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+              this.transPorLocalId()
+            }
+          })
+        Swal.fire('Borrado!', 'El Archivo fue borrado.', 'success');
+      }
+    });
 
   }
 
-public PageSize(): void {
+  public PageSize(): void {
     this.query = '';
-    this.loadTrasnferencias();
+    if (this.user.role === 'SUPERADMIN') {
+      this.loadTrasnferencias();
+    }
+    if (this.user.role === 'ADMIN' || this.user.role === 'VENTAS') {
+      this.transPorLocalId()
+    }
     // this.router.navigateByUrl('/productos')
   }
 
   handleSearchEvent(event: any) {
     if (event.trasnferencias) {
-      this.trasnferencias = event.trasnferencias;
+      this.transferencias = event.trasnferencias;
     }
   }
 

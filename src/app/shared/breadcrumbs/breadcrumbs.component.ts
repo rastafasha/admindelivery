@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-breadcrumbs',
+  standalone:false,
   templateUrl: './breadcrumbs.component.html',
   styles: [
   ]
@@ -20,7 +21,7 @@ export class BreadcrumbsComponent implements OnDestroy,  OnInit {
 
     this.tituloSub$ = this.getArgumentosRuta().subscribe(({tituloPage})=>{ //muestra la info
       this.tituloPage = tituloPage;
-      document.title = `Admin-Pro | ${tituloPage}`;
+      document.title = `Zlipmenu Admin | ${tituloPage}`;
     });
 
   }

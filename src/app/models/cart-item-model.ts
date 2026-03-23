@@ -1,4 +1,5 @@
 import { Categoria } from "./categoria.model";
+import { Producto } from "./producto.model";
 
 export class CartItemModel {
 
@@ -11,14 +12,14 @@ export class CartItemModel {
     category_name:Categoria;
     img:string;
 
-    // constructor(product: Producto){
-    //   this.productId= product._id;
-    //   this.productName = product.titulo;
-    //   // this.category_name = product.categoria;
-    //   this.description = product.detalle;
-    //   // this.productPrice = product.precio_ahora;
-    //   this.quantity = 1;
-    // }
+    constructor(product: Producto){
+      this.productId= product._id;
+      this.productName = product.titulo;
+      // this.category_name = product.categoria;
+      this.description = product.detalle;
+      // this.productPrice = product.precio_ahora;
+      this.quantity = 1;
+    }
 
 
 

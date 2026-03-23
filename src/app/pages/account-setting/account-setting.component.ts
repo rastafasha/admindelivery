@@ -22,6 +22,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-account-setting',
+  standalone:false,
   templateUrl: './account-setting.component.html',
   styleUrls: ['./account-setting.component.css'],
 })
@@ -62,7 +63,6 @@ export class AccountSettingComponent implements OnInit {
     this.congeneralService.cargarCongenerals().subscribe(
       congenerals => {
         this.congenerals = congenerals;
-        console.log(this.congenerals);
       }
     )
 
@@ -70,7 +70,6 @@ export class AccountSettingComponent implements OnInit {
 
 
   changeTheme(theme:string){ //recibe la data del boton por medio de la clase theme:string
-
     this.settingsService.changeTheme(theme);// llamamos el servicio
   }
 

@@ -24,6 +24,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-cat-edit',
+  standalone:false,
   templateUrl: './cat-edit.component.html',
   styleUrls: ['./cat-edit.component.css'],
   providers: [IconosService]

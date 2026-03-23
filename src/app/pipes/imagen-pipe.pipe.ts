@@ -4,14 +4,15 @@ import { environment } from '../../environments/environment';
 const base_url = environment.mediaUrl;
 
 @Pipe({
-  name: 'imagenPipe'
+  name: 'imagenPipe',
+  standalone:false,
 })
 export class ImagenPipePipe implements PipeTransform {
 
   transform(img: string, tipo: 'usuarios'|'tiendas'|'marcas'|'productos'|'congenerals'
   |'promocions'|'galerias'|'ingresos'|
   'facturas'|'blogs' |'pages' |'cursos'
-  |'sliders'|'drivers'|'tipos'
+  |'sliders'|'drivers'
 ): string {
 
     if(!img){

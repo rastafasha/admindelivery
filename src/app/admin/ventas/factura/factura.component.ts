@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import { ActivatedRoute, Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { ComentarioService } from 'src/app/services/comentario.service';
+import { ProductoService } from 'src/app/services/producto.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { environment } from 'src/environments/environment';
@@ -12,6 +13,7 @@ declare let jsPDF;
 
 @Component({
   selector: 'app-factura',
+  standalone:false,
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.css']
 })
@@ -35,6 +37,7 @@ export class FacturaComponent implements OnInit {
     private http: HttpClient,
     private _ventaService: VentaService,
     private _comentarioService : ComentarioService,
+    private _productoService : ProductoService,
     private cdr: ChangeDetectorRef
   ) {
     this.identity = this._userService.usuario;
