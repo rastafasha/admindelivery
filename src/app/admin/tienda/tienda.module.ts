@@ -13,10 +13,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { AtencionLocalComponent } from './atencion-local/atencion-local.component';
-import { CarritoComponent } from './atencion-local/carrito/carrito.component';
-import { ProductoComponent } from './atencion-local/producto/producto.component';
-import { ComponentsAtentionModule } from './atencion-local/components/components.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
@@ -34,9 +30,6 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     TiendaListComponent,
     TiendaDetailComponent,
     UserDetailComponent,
-    AtencionLocalComponent,
-    CarritoComponent,
-    ProductoComponent,
     PedidosMenuComponent,
     ComentariosappComponent
 
@@ -62,7 +55,6 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     PdfViewerModule,
     NgxPaginationModule,
     CKEditorModule,
-    ComponentsAtentionModule,
     SharedModule,
     DriverpModule, 
     ComponentsModule

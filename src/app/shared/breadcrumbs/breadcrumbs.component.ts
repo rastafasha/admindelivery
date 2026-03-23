@@ -21,7 +21,7 @@ export class BreadcrumbsComponent implements OnDestroy,  OnInit {
 
     this.tituloSub$ = this.getArgumentosRuta().subscribe(({tituloPage})=>{ //muestra la info
       this.tituloPage = tituloPage;
-      document.title = `Zlipmenu Admin | ${tituloPage}`;
+      document.title = `Delivery Admin | ${tituloPage}`;
     });
 
   }

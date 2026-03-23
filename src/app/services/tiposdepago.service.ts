@@ -81,6 +81,15 @@ export class TiposdepagoService {
     return this.http.post(url, paymentMethod, this.headers);
   }
 
+  getPaymentMethodByTiendaId(_id: string){
+      const url = `${base_url}/tipopago/tienda/${_id}`;
+      return this.http.get<any>(url, this.headers)
+        .pipe(
+          map((resp:{ok: boolean, paymentMethods: PaymentMethod[]}) => resp.paymentMethods)
+          );
+  
+    }
+
 
 
   actualizarPaymentMethod(paymentMethod: PaymentMethod){

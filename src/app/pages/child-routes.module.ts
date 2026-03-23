@@ -9,8 +9,6 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { AdminGuard } from '../guards/admin.guard';
-import { MarcaEditComponent } from '../admin/marca/marca-edit/marca-edit.component';
-import { MarcaIndexComponent } from '../admin/marca/marca-index/marca-index.component';
 import { CatIndexComponent } from '../admin/categoria/cat-index/cat-index.component';
 import { CatEditComponent } from '../admin/categoria/cat-edit/cat-edit.component';
 import { ProdIndexComponent } from '../admin/proucto/prod-index/prod-index.component';
@@ -35,16 +33,10 @@ import { CreateIngresoComponent } from '../admin/ingreso/create-ingreso/create-i
 import { DetalleIngresoComponent } from '../admin/ingreso/detalle-ingreso/detalle-ingreso.component';
 import { IndexIngresoComponent } from '../admin/ingreso/index-ingreso/index-ingreso.component';
 import { GaleriaProductoComponent } from '../admin/proucto/galeria-producto/galeria-producto.component';
-import { CursoIndexComponent } from '../admin/curso/curso-index/curso-index.component';
-import { CursoEditComponent } from '../admin/curso/curso-edit/curso-edit.component';
 import { SliderComponent } from '../admin/slider/slider.component';
 import { SlidereditComponent } from '../admin/slider/slideredit/slideredit.component';
-import { PageIndexComponent } from '../admin/page/page-index/page-index.component';
-import { PageEditComponent } from '../admin/page/page-edit/page-edit.component';
 import { BlogIndexComponent } from '../admin/blog/blog-index/blog-index.component';
 import { BlogEditComponent } from '../admin/blog/blog-edit/blog-edit.component';
-import { VideoIndexComponent } from '../admin/curso/video-index/video-index.component';
-import { VideoEditComponent } from '../admin/curso/video-edit/video-edit.component';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { ContactodetailsComponent } from '../admin/contacto/contactodetails/contactodetails.component';
 import { TiendaaddComponent } from '../admin/tienda/tienda/tiendaadd/tiendaadd.component';
@@ -52,11 +44,8 @@ import { TiendaListComponent } from '../admin/tienda/tienda/tienda-list/tienda-l
 import { UsuariosTiendaComponent } from '../admin/tienda/usuarios/usuarios-tienda/usuarios-tienda.component';
 import { UsertiendaaddComponent } from '../admin/tienda/usuarios/usertiendaadd/usertiendaadd.component';
 import { UserDetailComponent } from '../admin/tienda/usuarios/user-detail/user-detail.component';
-import { AtencionLocalComponent } from '../admin/tienda/atencion-local/atencion-local.component';
-import { CarritoComponent } from '../admin/tienda/atencion-local/carrito/carrito.component';
 import { ListaTrasnferenciasComponent } from '../admin/transferencias/lista-trasnferencias/lista-trasnferencias.component';
 import { TiposdepagoComponent } from '../admin/tiposdepago/tiposdepago.component';
-import { ProductoComponent } from '../admin/tienda/atencion-local/producto/producto.component';
 import { PagosEfectivoComponent } from '../admin/pagos-efectivo/pagos-efectivo.component';
 import { PagochequeService } from '../services/pagocheque.service';
 import { PagosChequeComponent } from '../admin/pagos-cheque/pagos-cheque.component';
@@ -79,25 +68,13 @@ const childRoutes: Routes = [
             { path: 'blog/edit/:id', component: BlogEditComponent, data:{tituloPage:'Blog Edit '} },
             { path: 'blog/create', component: BlogEditComponent, data:{tituloPage:'Blog Create '} },
 
-            { path: 'page', component: PageIndexComponent, data:{tituloPage:'Page '} },
-            { path: 'page/edit/:id', component: PageEditComponent, data:{tituloPage:'Page Edit '} },
-            { path: 'page/create', component: PageEditComponent, data:{tituloPage:'Page Create '} },
 
             { path: 'slider', component: SliderComponent, data:{tituloPage:'Sliders '} },
             { path: 'slider/edit/:id', component: SlidereditComponent, data:{tituloPage:'Sliders Edit '} },
             { path: 'slider/create', component: SlidereditComponent, data:{tituloPage:'Sliders Create '} },
 
-            { path: 'curso', component: CursoIndexComponent, data:{tituloPage:'Cursos '} },
-            { path: 'curso/edit/:id', component: CursoEditComponent, data:{tituloPage:'Cursos Edit '} },
-            { path: 'curso/create', component: CursoEditComponent, data:{tituloPage:'Cursos Create '} },
 
-            { path: 'curso/curso-video', component: VideoIndexComponent, data:{tituloPage:'Video '} },
-            { path: 'curso/curso-video/create', component: VideoEditComponent, data:{tituloPage:'Videos Create '} },
-            { path: 'curso/curso-video/edit/:id', component: VideoEditComponent, data:{tituloPage:'Videos Edit '} },
 
-            { path: 'marca', component: MarcaIndexComponent, data:{tituloPage:'Marcas '} },
-            { path: 'marca/edit/:id', component: MarcaEditComponent, data:{tituloPage:'Marca Edit '} },
-            { path: 'marca/create', component: MarcaEditComponent, data:{tituloPage:'Marca Create '} },
 
             { path: 'categoria', component: CatIndexComponent, data:{tituloPage:'Categorias '} },
             { path: 'categoria/edit/:id', component: CatEditComponent, data:{tituloPage:'Categoría Edit '} },
@@ -161,9 +138,6 @@ const childRoutes: Routes = [
             {path: 'pagosefectivo', component: PagosEfectivoComponent, data:{tituloPage:'Pagos en Efectivo'}},
             {path: 'pagoscheque', component: PagosChequeComponent, data:{tituloPage:'Pagos en cheque'}},
             {path: 'tipos-de-pago', component: TiposdepagoComponent , data:{tituloPage:'tipos-de-pago'}},
-            {path: 'atencion-local', component: AtencionLocalComponent , data:{tituloPage:'Atención Local'}},
-            {path: 'producto/:id', component:ProductoComponent, data:{tituloPage:'Producto'} },
-            {path: 'carrito', component: CarritoComponent , data:{tituloPage:'Tienda Carrito'}},
             {path: 'tienda-user/edit/:id', component: UsertiendaaddComponent , data:{tituloPage:'Tienda-empleado-edit'}},
             {path: 'tienda-user/detalle/:id', component: UserDetailComponent , data:{tituloPage:'Tienda-empleado-detail'}},
 

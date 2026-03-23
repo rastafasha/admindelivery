@@ -379,7 +379,6 @@ drivers: Driver[] = [];
    */
   private updateAsignacionWithPosition(): void {
     if (!this.asignacionId || !this.driverPosition ) return;
-
     
     // Update silently without showing alert
     this.updateAsignacion();
@@ -412,6 +411,9 @@ drivers: Driver[] = [];
       zoom: this.user.role === 'ADMIN' || this.user.role === 'SUPERADMIN' ? 12 : 15, // Wider zoom for admin
       zoomControl: true
     });
+
+    // Call onMapReady to fix potential sizing issues
+    this.onMapReady(this.map);
 
     // Agregar tiles de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -560,7 +562,7 @@ drivers: Driver[] = [];
    * Construye el objeto de datos para compartir
    */
   private buildShareData(): ShareData {
-    let title = '📍 Coordenadas de Entrega - Zlipmenu';
+    let title = '📍 Coordenadas de Entrega - Delivery';
     let text = this.buildCoordinateText();
 
     // Crear URL con coordenadas para abrir en Google Maps
@@ -580,7 +582,7 @@ drivers: Driver[] = [];
    * Construye el texto con las coordenadas formateadas
    */
   private buildCoordinateText(): string {
-    let text = '🛵 **Ruta de Entrega - Zlipmenu**\n\n';
+    let text = '🛵 **Ruta de Entrega - Delivery**\n\n';
 
     if (this.driverPosition) {
       text += `📍 **Repartidor:** ${this.driverPosition.lat.toFixed(6)}, ${this.driverPosition.lng.toFixed(6)}\n`;
@@ -592,7 +594,7 @@ drivers: Driver[] = [];
       text += `[Ver en Google Maps](https://www.google.com/maps?q=${this.deliveryPosition.lat},${this.deliveryPosition.lng})`;
     }
 
-    text += '\n\n📱 Compartido desde Zlipmenu Delivery';
+    text += '\n\n📱 Compartido desde Delivery';
     return text;
   }
 
@@ -641,6 +643,12 @@ drivers: Driver[] = [];
     this.showDriversList = !this.showDriversList;
   // console.log('toggleDriversList:', this.showDriversList ? 'showing' : 'hiding');
   this.cdr.markForCheck();
+  }
+
+  onMapReady(map: L.Map) {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 0);
   }
 
 }
