@@ -9,7 +9,7 @@ export const environment = {
   // mediaUrl: 'http://localhost:3000/api/uploads',
   // soketServer : 'http://localhost:3000',
 
-   //remoto vercel
+   //remoto render
   baseUrl: 'https://back-delivery-nodejs.onrender.com/api',
   mediaUrl: 'https://back-delivery-nodejs.onrender.com/api/uploads/',
   soketServer : 'https://back-delivery-nodejs.onrender.com',

@@ -140,7 +140,6 @@ import { DriverpModule } from './driverp/driverp.module';
     NgxDropzoneModule,
     PdfViewerModule,
     NgxPaginationModule,
-    CKEditorModule,
     TiendaModule,
     ReusablesModule,
     SharedModule,

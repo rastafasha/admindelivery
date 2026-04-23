@@ -39,7 +39,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ComponentsModule,
     PipesModule,
     AdminModule,
-    CKEditorModule,
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {

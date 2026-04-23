@@ -22,7 +22,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 
 //pluggins
-import { NgChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UsuarioComponent } from './mantenimientos/usuario/usuario.component';
 import { AdminModule } from "../admin/admin.module";
@@ -53,7 +52,6 @@ import { ProducListFeaturedComponent } from '../components/produc-list-featured/
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule,
-    NgChartsModule,
     NgxPaginationModule,
     AdminModule,
     TranslateModule,

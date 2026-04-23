@@ -8,7 +8,6 @@ import { TiendaDetailComponent } from './tienda/tienda-detail/tienda-detail.comp
 import { UserDetailComponent } from './usuarios/user-detail/user-detail.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -16,8 +15,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DriverpModule } from "src/app/admin/driverp/driverp.module";
 import { PedidosMenuComponent } from './pedidos-menu/pedidos-menu.component';
-import { Modal } from 'bootstrap';
-import { ModalinfoTiendasComponent } from 'src/app/components/modalinfo-tiendas/modalinfo-tiendas.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ComentariosappComponent } from './comentariosapp/comentariosapp.component';
 
@@ -54,7 +51,6 @@ import { ComentariosappComponent } from './comentariosapp/comentariosapp.compone
     NgxDropzoneModule,
     PdfViewerModule,
     NgxPaginationModule,
-    CKEditorModule,
     SharedModule,
     DriverpModule, 
     ComponentsModule

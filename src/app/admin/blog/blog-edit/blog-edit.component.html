@@ -30,9 +30,7 @@
                         <div class="form-group col-12 ">
                             <label for="text-input">{{'Descripción'| translate}} <span class="required">*</span></label>
                             <div class=" col-12 ">
-
-                                <ckeditor [editor]="Editor" formControlName="descripcion" data="<p>Hello, world!</p>"
-                                    required></ckeditor>
+                                <textarea name="descripcion" id="" formControlName="descripcion"></textarea>
                             </div>
                         </div>
                     </div>
@@ -90,13 +88,13 @@
                     <i class="fa fa-save"></i> {{'Cambiar Imagen'| translate}}
                 </button>
                 <div class="col-xs-12">
-                <h4>{{'Especificaciones'}}:</h4>
-                <ul>
-                    <li>{{'Tamaño máximo'}}: 300px X 300px</li>
-                    <li>{{'Peso máximo'}}: 3 mega bites</li>
-                    <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
-                </ul>
-            </div>
+                    <h4>{{'Especificaciones'}}:</h4>
+                    <ul>
+                        <li>{{'Tamaño máximo'}}: 300px X 300px</li>
+                        <li>{{'Peso máximo'}}: 3 mega bites</li>
+                        <li>{{'Formato permitido'}}: jpg, .gif, .png</li>
+                    </ul>
+                </div>
             </div>
             <div *ngIf="blogSeleccionado.video_review">
                 <div class="card">
