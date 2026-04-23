@@ -55,6 +55,7 @@ import { ProducListFeaturedComponent } from '../components/produc-list-featured/
     NgxPaginationModule,
     AdminModule,
     TranslateModule,
+    SharedModule
 ],
   providers:[IconosService]
 })
