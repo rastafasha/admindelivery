@@ -38,10 +38,14 @@
         <div class="card">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs profile-tab" role="tablist">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#ordenes" role="tab" aria-expanded="true">Ordenes</a> </li>
-                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#cancelaciones" role="tab" aria-expanded="false">Cancelaciones</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#direccion" role="tab" aria-expanded="false">Direcciones</a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-expanded="false">Settings</a> </li>
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#ordenes" role="tab"
+                        aria-expanded="true">Ordenes</a> </li>
+                <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#cancelaciones" role="tab"
+                        aria-expanded="false">Cancelaciones</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#direccion" role="tab"
+                        aria-expanded="false">Direcciones</a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab"
+                        aria-expanded="false">Settings</a> </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -52,10 +56,14 @@
                             <!--Pedido-->
                             <div class=" itemFav pedidoResumen">
                                 <p><b>Estado:</b> <br>
-                                    <span class="badge badge-danger" *ngIf="vent.estado == 'Venta en proceso'">{{vent.estado}}</span>
-                                    <span class="badge badge-success" *ngIf="vent.estado == 'Enviado'">{{vent.estado}}</span>
-                                    <span class="badge badge-primary" *ngIf="vent.estado == 'Finalizado'">{{vent.estado}}</span>
-                                    <span class="badge badge-secondary" *ngIf="vent.estado == 'Reembolsado'">{{vent.estado}}</span>
+                                    <span class="badge badge-danger"
+                                        *ngIf="vent.estado == 'Venta en proceso'">{{vent.estado}}</span>
+                                    <span class="badge badge-success"
+                                        *ngIf="vent.estado == 'Enviado'">{{vent.estado}}</span>
+                                    <span class="badge badge-primary"
+                                        *ngIf="vent.estado == 'Finalizado'">{{vent.estado}}</span>
+                                    <span class="badge badge-secondary"
+                                        *ngIf="vent.estado == 'Reembolsado'">{{vent.estado}}</span>
                                 </p>
                                 <p><b>Compra:</b> N°-{{vent._id.toUpperCase()}}</p>
                                 <p><b>Metodo Pago:</b> {{vent.metodo_pago}}</p>
@@ -64,8 +72,8 @@
                                 <p><b>Total Pagado:</b> ${{vent.total_pagado}}</p>
                                 <a [routerLink]="['/dashboard/ventas/modulo/detalle/',vent._id]">
                                     <button class="btn btn-full-dark-s">
-                                Ver Detalle
-                              </button>
+                                        Ver Detalle
+                                    </button>
                                 </a>
 
                             </div>
@@ -81,18 +89,22 @@
                             <!--Pedido-->
                             <div class=" itemFav pedidoResumen">
                                 <p><b>Estado:</b> <br>
-                                    <span class="badge badge-danger" *ngIf="can.estado == 'Venta en proceso'">{{can.estado}}</span>
-                                    <span class="badge badge-success" *ngIf="can.estado == 'Enviado'">{{can.estado}}</span>
-                                    <span class="badge badge-primary" *ngIf="can.estado == 'Finalizado'">{{can.estado}}</span>
-                                    <span class="badge badge-secondary" *ngIf="can.estado == 'Reembolsado'">{{can.estado}}</span>
+                                    <span class="badge badge-danger"
+                                        *ngIf="can.estado == 'Venta en proceso'">{{can.estado}}</span>
+                                    <span class="badge badge-success"
+                                        *ngIf="can.estado == 'Enviado'">{{can.estado}}</span>
+                                    <span class="badge badge-primary"
+                                        *ngIf="can.estado == 'Finalizado'">{{can.estado}}</span>
+                                    <span class="badge badge-secondary"
+                                        *ngIf="can.estado == 'Reembolsado'">{{can.estado}}</span>
                                 </p>
                                 <p><b>Motivo:</b> {{can.mensaje}}</p>
                                 <p><b>Venta id:</b> {{can.venta}}</p>
                                 <p><b>Date:</b> {{can.createdAt | date:'MMM d, y, h:mm:ss a'}}</p>
                                 <a [routerLink]="['/dashboard/cancelacion/modulo/detalle/',can._id]">
                                     <button class="btn btn-full-dark-s">
-                              Ver Detalle
-                            </button>
+                                        Ver Detalle
+                                    </button>
                                 </a>
                             </div>
                             <!--Pedido-->
@@ -135,52 +147,57 @@
                 <!--4 tab-->
                 <div class="tab-pane" id="settings" role="tabpanel" aria-expanded="false">
                     <div class="card-body">
-                        <form class="form-horizontal form-material">
+                        <form class="form-horizontal form-material" formGroupName="usuarioForm"
+                            >
                             <div class="form-group">
                                 <label class="col-md-12">Full Name</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                    <input type="text" placeholder="Johnathan Doe"
+                                        class="form-control form-control-line" formControlName="first_name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="example-email" class="col-md-12">Email</label>
                                 <div class="col-md-12">
-                                    <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                    <input type="email" placeholder="johnathan@admin.com"
+                                        class="form-control form-control-line" name="example-email" id="example-email"
+                                        formControlName="email">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Password</label>
                                 <div class="col-md-12">
-                                    <input type="password" value="password" class="form-control form-control-line">
+                                    <input type="password" value="password" class="form-control form-control-line"
+                                        formControlName="password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Phone No</label>
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                    <input type="text" placeholder="123 456 7890" class="form-control form-control-line"
+                                        formControlName="telefono">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Message</label>
                                 <div class="col-md-12">
-                                    <textarea rows="5" class="form-control form-control-line"></textarea>
+                                    <textarea rows="5" class="form-control form-control-line"
+                                        formControlName="message"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-12">Select Country</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control form-control-line">
-                                      <option>London</option>
-                                      <option>India</option>
-                                      <option>Usa</option>
-                                      <option>Canada</option>
-                                      <option>Thailand</option>
-                                  </select>
+                                <div class="input-group form-label form-control-line col-sm-12">
+                                    <select formControlName="pais" name="pais" class="form-control">
+                                        <option *ngFor="let data of paises" value="{{data.pais}}">
+                                            {{data.pais}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">Update Profile</button>
+                                    <button type="button" class="btn btn-success" (click)="updateUsuario()">Update Profile</button>
                                 </div>
                             </div>
                         </form>

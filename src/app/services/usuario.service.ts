@@ -13,7 +13,7 @@ import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.baseUrl;
 const clientIdGoogle = environment.clientIdGoogle;
-declare const gapi: any;
+// declare const gapi: any;
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class UsuarioService {
     private router: Router,
     private ngZone: NgZone
   ) {
-    this.googleInit();
+    // this.googleInit();
   }
 
   get token(): string {
@@ -66,18 +66,18 @@ export class UsuarioService {
     localStorage.setItem('menu', JSON.stringify(menu));
   }
 
-  googleInit() {
-    return new Promise<void>((resolve) => {
-      gapi.load('auth2', () => {
-        this.auth2 = gapi.auth2.init({
-          client_id: clientIdGoogle,
-          // client_id: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
-          cookiepolicy: 'single_host_origin',
-        });
-        resolve();
-      });
-    });
-  }
+  // googleInit() {
+  //   return new Promise<void>((resolve) => {
+  //     gapi.load('auth2', () => {
+  //       this.auth2 = gapi.auth2.init({
+  //         client_id: clientIdGoogle,
+  //         // client_id: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
+  //         cookiepolicy: 'single_host_origin',
+  //       });
+  //       resolve();
+  //     });
+  //   });
+  // }
 
   logout() {
     localStorage.removeItem('token');
@@ -86,11 +86,11 @@ export class UsuarioService {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('__paypal_storage__');
 
-    this.auth2.signOut().then(() => {
-      this.ngZone.run(() => {
-        this.router.navigateByUrl('/login');
-      });
-    });
+    // this.auth2.signOut().then(() => {
+    //   this.ngZone.run(() => {
+    //     this.router.navigateByUrl('/login');
+    //   });
+    // });
     window.location.reload();
   }
 

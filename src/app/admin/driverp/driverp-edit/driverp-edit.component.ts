@@ -65,7 +65,6 @@ export class DriverpEditComponent implements OnInit {
       (resp: any) => {
         // this.listIcons = resp.iconos;
         this.driverSeleccionado = resp;
-        console.log('driver: ', this.driverSeleccionado)
 
         this.driverProfileForm.setValue({
           marca: this.driverSeleccionado.marca,
@@ -80,7 +79,7 @@ export class DriverpEditComponent implements OnInit {
         });
       }
     )
-    // this.validarFormulario();
+    this.validarFormulario();
   }
 
   validarFormulario() {

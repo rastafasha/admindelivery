@@ -3,13 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
-
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { environment } from 'src/environments/environment';
 
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario.model';
-import { ModalImagenService } from 'src/app/services/modal-imagen.service';
 
 import { Direccion } from 'src/app/models/direccion.model';
 import { DireccionService } from 'src/app/services/direccion.service';
@@ -18,6 +15,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import {Venta, Cancelacion} from '../../../models/ventas.model';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { PaisService } from 'src/app/services/pais.service';
 
 interface HtmlInputEvent extends Event{
   target : HTMLInputElement & EventTarget;
@@ -49,51 +47,45 @@ export class UsuarioComponent implements OnInit {
 
   banner: string;
   pageTitle: string;
-
+  paises: any[] = [];
 
   public Editor = ClassicEditor;
 
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private modalImagenService: ModalImagenService,
-    private fileUploadService: FileUploadService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private _direccionService: DireccionService,
     private ventaService: VentaService,
+    private paisService: PaisService,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.baseUrl;
   }
 
   ngOnInit(): void {
+      window.scrollTo(0,0);
+     this.getPaises();
+    this.validarFormulario();
     this.activatedRoute.params.subscribe( ({id}) => this.cargarUsuario(id));
     this.activatedRoute.params.subscribe( ({id}) => this.listarDirecciones(id));
     this.activatedRoute.params.subscribe( ({id}) => this.listar_ordenes(id));
     this.activatedRoute.params.subscribe( ({id}) => this.listar_cancelacion(id));
-
-    window.scrollTo(0,0);
-    this.validarFormulario();
-
   }
 
 
-  validarFormulario(){
-    this.usuarioForm = this.fb.group({
-      titulo: ['',Validators.required],
-      descripcion: ['',Validators.required],
-      categoria: ['',Validators.required],
-      isFeatured: [''],
-      video_review: [''],
+ 
+  getPaises(){
+    this.paisService.getPaises().subscribe((resp:any)=>{
+      this.paises = resp.paises;
+      console.log(this.paises);
     })
   }
 
 
 
   cargarUsuario(_id: string){
-
     if (_id) {
       this.pageTitle = 'Edit Usuario';
       this.usuarioService.getUserById(_id).subscribe(
@@ -112,6 +104,7 @@ export class UsuarioComponent implements OnInit {
             img : res.img
           });
           this.usuario = res;
+          console.log(this.usuario)
         }
       );
     } else {
@@ -120,30 +113,14 @@ export class UsuarioComponent implements OnInit {
 
   }
 
-
-
-
-
-  updateBlog(){
-
-    const {first_name, last_name, telefono, pais,  numdoc, email } = this.usuarioForm.value;
-
-    if(this.usuario.uid){
-      //actualizar
-      const data = {
-        ...this.usuarioForm.value,
-        _id: this.usuario.uid
-      }
-      this.usuarioService.guardarUsuario(data).subscribe(
-        resp =>{
-          Swal.fire('Actualizado', `${first_name}  actualizado correctamente`, 'success');
-          console.log(this.usuario);
-        });
-
-    }else{
-      return;
-    }
-
+   validarFormulario(){
+    this.usuarioForm = this.fb.group({
+      first_name: ['',Validators.required],
+      last_name: ['',Validators.required],
+      telefono: ['',Validators.required],
+      pais: [''],
+      numdoc: [''],
+    })
   }
 
 
@@ -185,6 +162,28 @@ export class UsuarioComponent implements OnInit {
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
+  }
+
+  updateUsuario(){
+
+    const {first_name, last_name, telefono, pais,  numdoc, email } = this.usuarioForm.value;
+
+    if(this.usuario.uid){
+      //actualizar
+      const data = {
+        ...this.usuarioForm.value,
+        _id: this.usuario.uid
+      }
+      this.usuarioService.guardarUsuario(data).subscribe(
+        resp =>{
+          Swal.fire('Actualizado', `${first_name}  actualizado correctamente`, 'success');
+          console.log(this.usuario);
+        });
+
+    }else{
+      return;
+    }
+
   }
 
 

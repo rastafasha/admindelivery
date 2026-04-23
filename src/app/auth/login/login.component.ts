@@ -95,12 +95,12 @@ ngOnInit(){
   //   this.startApp();
   // }
 
-  async startApp(){
-    this.usuarioService.googleInit();
-    this.auth2 = this.usuarioService.auth2;
+  // async startApp(){
+  //   this.usuarioService.googleInit();
+  //   this.auth2 = this.usuarioService.auth2;
 
-    this.attachSignin(document.getElementById('my-signin2'));
-  }
+  //   this.attachSignin(document.getElementById('my-signin2'));
+  // }
 
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {},

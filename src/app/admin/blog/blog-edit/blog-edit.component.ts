@@ -129,7 +129,6 @@ export class BlogEditComponent implements OnInit {
             img : res.img
           });
           this.blogSeleccionado = res;
-          console.log(this.blogSeleccionado);
         }
       );
     } else {
